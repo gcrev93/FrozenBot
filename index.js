@@ -1,30 +1,20 @@
-var Speakable = require('speakable');
- 
-var speakable = new Speakable({key: 'AIzaSyDBAUjmmT9HwbE54D7vq7WTneKYIAPBV1w'});
-
-speakable.on('speechStart', function() {
-  console.log('onSpeechStart');
-});
- 
-speakable.on('speechStop', function() {
-  console.log('onSpeechStop');
-});
- 
-speakable.on('speechReady', function() {
-  console.log('onSpeechReady');
-});
+var record = require('./node_modules/node-record-lpcm16/index.js'),
+    fs     = require('fs');
+    
+var file = fs.createWriteStream('test.wav', { encoding: 'binary' });
+var speech = require("./speech.js");
+var accessToken;
 
 
-speakable.on('error', function(err) {
-  console.log('onError:');
-  console.log(err);
-  speakable.recordVoice();
-});
+record.start();
+
  
-speakable.on('speechResult', function(recognizedWords) {
-  console.log('onSpeechResult:')
-  console.log(recognizedWords);
-  speakable.recordVoice();
-});
- 
-speakable.recordVoice(); 
+// Stop recording after three seconds and write to file 
+setTimeout(function () {
+  console.log("recording stopped")
+  record.stop().pipe(file);
+  speech.speechFun('test.wav');
+}, 10000); 
+
+  
+
