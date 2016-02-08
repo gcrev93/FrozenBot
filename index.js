@@ -14,12 +14,12 @@ speakable.on('speechReady', function() {
   console.log('onSpeechReady');
 });
 
-/*
+
 speakable.on('error', function(err) {
   console.log('onError:');
   console.log(err);
   speakable.recordVoice();
-});*/
+});
  
 speakable.on('speechResult', function(recognizedWords) {
   console.log('onSpeechResult:')
