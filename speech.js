@@ -8,7 +8,7 @@ var request = require('request');
 //var fName;
 var clientId = 't2s';                             // Can be anything
 var clientSecret = 'dd7c09c4cd894ce69b3817bdfcd21162'; // API key from Azure marketplace
-
+var gorec;
 var key = [];
 
 
@@ -113,27 +113,15 @@ var speechToText = function (filename, accessToken, callback) {
 }
 
 var Analysis = function(word){
-    console.log("in analysis function");
- 
- if(key[0])
- console.log("there is something");
        
-  for(var i = 0, j = 0; i <word.length; i++)
-  {
-      if(word[i] != ' ')
-      {
-          if(key[j])
-           key[j] = key[j] + word[i];
-          else
-            key[j] = word[i];
-      }
-      else
-      {
-          j++;
-          key[j] = word[i];
-          j++;
-      }
-  }
+    var n = word.search('elsa'),
+        m = word.search('frozen'),
+        o = word.search('sing');
+        
+  // if( n != -1 || m != -1 || o != -1)
+      
+    
+ 
   
 
 }
