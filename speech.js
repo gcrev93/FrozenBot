@@ -5,10 +5,11 @@
 var fs = require('fs');
 var util = require('util');
 var request = require('request');
+var sp     = require('./sp.js');
 //var fName;
 var clientId = 't2s';                             // Can be anything
 var clientSecret = 'dd7c09c4cd894ce69b3817bdfcd21162'; // API key from Azure marketplace
-
+var gorec;
 var key = [];
 
 
@@ -23,7 +24,7 @@ exports.speechFun = function(fName) {
     
     speechToText(fName, accessToken, function(err, res) {
       if(err) return console.log(err);
-      console.log('Confidence ' + res.results[0].confidence + ' for: "' + res.results[0].lexical + '"');
+      //console.log('Confidence ' + res.results[0].confidence + ' for: "' + res.results[0].lexical + '"');
       Analysis(res.results[0].lexical);
     });
   });
@@ -112,29 +113,20 @@ var speechToText = function (filename, accessToken, callback) {
   });
 }
 
-var Analysis = function(word){
-    console.log("in analysis function");
- 
- if(key[0])
- console.log("there is something");
+var Analysis = function(x){
        
-  for(var i = 0, j = 0; i <word.length; i++)
-  {
-      if(word[i] != ' ')
-      {
-          if(key[j])
-           key[j] = key[j] + word[i];
-          else
-            key[j] = word[i];
-      }
-      else
-      {
-          j++;
-          key[j] = word[i];
-          j++;
-      }
-  }
-  
-
+    var n = x.search('elsa'),
+        m = x.search('frozen'),
+        o = x.search('sing');
+        
+   if( n != -1 || m != -1 || o != -1) 
+        sp.Start();
+        //console.log("serial port starting");
+    else
+        console.log("no keywords found");    
+    
 }
+
+
+
 
