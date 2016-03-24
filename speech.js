@@ -1,40 +1,11 @@
-//This script was written by another user on github(lukehoban). The site for this code is: https://gist.github.com/lukehoban/0ee5c1bef438dc5bd7cb
-// It calls the Project Oxford API using JS
-
-
+//This script is an edited version of a script written by another user on github(lukehoban). The site for this code is: https://gist.github.com/lukehoban/0ee5c1bef438dc5bd7cb
 var fs = require('fs');
 var util = require('util');
 var request = require('request');
-var sp     = require('./sp.js');
-//var fName;
-var clientId = 't2s';                             // Can be anything
-var clientSecret = 'dd7c09c4cd894ce69b3817bdfcd21162'; // API key from Azure marketplace
-var gorec;
-var key = [];
 
+// ==== Get Project Oxford Access Token and Use Project Oxford Speech To Text API ====
 
-exports.speechFun = function(fName) {
-   getAccessToken(clientId, clientSecret, function(err, accessToken) {
-  if(err) return console.log(err);
- // console.log('Got access token: ' + accessToken)
-  
- /* textToSpeech(str, 'test.wav', accessToken, function(err) {
-    if(err) return console.log(err);
-    console.log('Wrote out: ' + 'test.wav');*/
-    
-    speechToText(fName, accessToken, function(err, res) {
-      if(err) return console.log(err);
-      //console.log('Confidence ' + res.results[0].confidence + ' for: "' + res.results[0].lexical + '"');
-      Analysis(res.results[0].lexical);
-    });
-  });
-}
-
-
-
-// ==== Helpers ====
-
-var getAccessToken = function(clientId, clientSecret, callback) {
+exports.getAccessToken = function(clientId, clientSecret, callback) {
   request.post({
     url: 'https://oxford-speech.cloudapp.net/token/issueToken',
     form: {
@@ -58,30 +29,7 @@ var getAccessToken = function(clientId, clientSecret, callback) {
   });
 }
 
-var textToSpeech = function (text, filename, accessToken, callback) {
-  var ssmlTemplate = "<speak version='1.0' xml:lang='en-us'><voice xml:lang='%s' xml:gender='%s' name='%s'>%s</voice></speak>";
-  request.post({
-    url: 'http://speech.platform.bing.com/synthesize',
-    body: util.format(ssmlTemplate, 'en-US', 'Female', 'Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)', text),
-    encoding: null,
-    headers: {
-      'Authorization': 'Bearer ' + accessToken,
-      'Content-Type' : 'application/ssml+xml',
-      'X-Microsoft-OutputFormat' : 'riff-16khz-16bit-mono-pcm',
-      'X-Search-AppId': '07D3234E49CE426DAA29772419F436CA',
-      'X-Search-ClientID': '1ECFAE91408841A480F00935DC390960',
-    }
-  }, function(err, resp, body) {
-    if(err) return callback(err);
-    console.log(body.type);
-    fs.writeFile(filename, body, 'binary', function (err) {
-      if (err) return callback(err);
-      callback(null);
-    });
-  });
-}
-
-var speechToText = function (filename, accessToken, callback) {
+exports.speechToText = function (filename, accessToken, callback) {
   fs.readFile(filename, function(err, waveData) {
     if(err) return callback(err);
     request.post({
@@ -111,20 +59,6 @@ var speechToText = function (filename, accessToken, callback) {
       }
     });
   });
-}
-
-var Analysis = function(x){
-       
-    var n = x.search('elsa'),
-        m = x.search('frozen'),
-        o = x.search('sing');
-        
-   if( n != -1 || m != -1 || o != -1) 
-        sp.Start();
-        //console.log("serial port starting");
-    else
-        console.log("no keywords found");    
-    
 }
 
 
