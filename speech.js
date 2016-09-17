@@ -29,6 +29,29 @@ exports.getAccessToken = function(clientId, clientSecret, callback) {
   });
 }
 
+exports.textToSpeech = function(text, filename, accessToken, callback) {
+  var ssmlTemplate = "<speak version='1.0' xml:lang='en-us'><voice xml:lang='%s' xml:gender='%s' name='%s'>%s</voice></speak>";
+  request.post({
+    url: 'http://speech.platform.bing.com/synthesize',
+    body: util.format(ssmlTemplate, 'en-US', 'Female', 'Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)', text),
+    encoding: null,
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type' : 'application/ssml+xml',
+      'X-Microsoft-OutputFormat' : 'riff-16khz-16bit-mono-pcm',
+      'User-Agent' : 'TTSWithNode',
+      'X-Search-AppId': '07D3234E49CE426DAA29772419F436CA',
+      'X-Search-ClientID': '1ECFAE91408841A480F00935DC390960',
+    }
+  }, function(err, resp, body) {
+    if(err) return callback(err);
+  //  console.log('this is it: ' + body);
+    fs.writeFile(filename, body, 'binary', function (err) {
+      if (err) return callback(err);
+      callback(null);
+    });
+  });
+}
 exports.speechToText = function (filename, accessToken, callback) {
   fs.readFile(filename, function(err, waveData) {
     if(err) return callback(err);
