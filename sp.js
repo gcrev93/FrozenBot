@@ -4,7 +4,7 @@ var serialPort = require("serialport"),
 
 
 
-var sp = new SerialPort("/dev/tty.usbmodem1421", {
+var sp = new SerialPort("/dev/tty.usbmodem1411", {
     baudrate: 115200,
     dataBits: 8,
     parity: 'none',
