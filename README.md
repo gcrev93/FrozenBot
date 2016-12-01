@@ -27,22 +27,33 @@ Here are the list of materials I used. Some alternatives may include using a dif
 ##Get Ready To Start Singing
 
 Step 1: Get The Tracks
+
 The first thing you need to do, is cut and edit the music samples you would like. If you have never edited music before, I suggest Audacity. You want to make about 10-15 second snippets, so that the toy is not singing forever. (If you do want it to sing full songs and you are 100% sure it wont drive you insane, just save the track to the microSD).
+
 When saving the snippets (or full tracks for the strong minded) onto the microSD card, be sure to save the tracks as track001.mp3, track002.mp3, track003.mp3 and etc. (You may have as many song snippets as you choose, I only have about 4).
 
 Step 2: Connecting the Hardware
+
 Setting up the hardware is a fairly easy process. If you need to check the list of things you need, revisit the 'What You Need Tab' . First insert the microSD card into the MP3 Music Shield. When inserting, you wont need to 'click' it in, just insert.
+
 Next, attach the MP3 Music Shield to the Arduino by placing it on top of the Arduino. Be sure to insert the MP3 Music Shield's male pins into the Arduino's corresponding female headers. They should attach tightly and there should be no wiggle rooms where their pins attach.
+
 Then what you want to do is attach the portable speaker to the MP3 Music Shield, just as you would plug headphones into an MP3 player. Lastly, attach the power cord to the Arduino and plug it in to the computer, so we can get the code running.
 
 Step 3: Flashing the Arduino
+
 Open Arduino IDE and select Examples, go to SFEMP3Shield and then choose MP3Shield_Library_Demo.
+
 Once the sketch opens, upload it to the Arduino. You may hear a slight noise come from the speaker.
 
 Step 4: Executing the Code
+
 Open up a text editor with the FrozenBot files available and also go a command line and go down into the FrozenBot folder. In the command line, you will need to download sox, you can either use brew to download sox or just download. You can find the sox binaries at https://sourceforge.net/projects/sox/files/sox/14.4.2/ . You will also need to install the serialport module by doing "npm install serialport"
+
 In the index.js file, be sure to insert the clientSecret id you got from your Project Oxford API login.
+
 In the index.js file, there is an Analysis functions. There are three keywords that will trigger the arduino to play. Feel free to add or change these words, if you feel as though your child may use other words
+
 In the sp.js file, there is a sp variable on line 7. Be sure to enter your port value where it says insert port. To find your port value go to your Arduino Software, select Tools and then Port and you will see the port to your Arduino listed. If you are using a Mac, may look something like this: /dev/tty.usbmodem1411 or /dev/cu.usbmodem1411. If your port value shows a cu. , replace it with tty in the code or else your Arduino will not be found. If you are using a PC, your port name should say COMx (x being a number).
 You are now ready to run it! In the command line, run : node index.js and sing away :)
 
