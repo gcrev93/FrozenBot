@@ -59,3 +59,8 @@ You are now ready to run it! In the command line, run : node index.js and sing a
 
 
 ### Gabrielle Crevecoeur | @nowayshecodes | nowayshecodes.com
+
+
+adding some new stuff to her account. I hope she doesn't mind I'm pretty comfortable in relaying any new inquires. 
+
+
